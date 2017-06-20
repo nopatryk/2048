@@ -98,6 +98,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Records.resx">
       <DependentUpon>Records.cs</DependentUpon>
@@ -127,6 +128,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\2.png" />
+    <None Include="Resources\1024.png" />
+    <None Include="Resources\512.png" />
+    <None Include="Resources\254.png" />
+    <None Include="Resources\128.png" />
+    <None Include="Resources\96999.png" />
+    <None Include="Resources\16.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\32.png" />
+    <None Include="Resources\2048.png" />
+    <None Include="Resources\8.png" />
+    <None Include="Resources\64.png" />
+    <None Include="Resources\4096.png" />
     <Content Include="records.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

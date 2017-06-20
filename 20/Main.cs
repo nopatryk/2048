@@ -28,6 +28,7 @@ namespace _20
 
             };
             mybtnsBackup = new string[4, 4];
+            paintColor();
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -297,32 +298,33 @@ namespace _20
         {
             foreach(MyButton mb in Controls.OfType<MyButton>())
             {
-                mb.BackColor = Color.FromArgb(193, 193, 193);
+                mb.BackColor = Color.FromArgb(175, 175, 175);
+                mb.BackgroundImage = null;
 
                 if (mb.Text == "2")
-                    mb.BackColor = Color.FromArgb(235, 235, 226);
+                    mb.BackgroundImage = Properties.Resources._2;
                 if (mb.Text == "4")
-                    mb.BackColor = Color.FromArgb(255, 215, 175);
+                    mb.BackgroundImage = Properties.Resources._4;
                 if (mb.Text == "8")
-                    mb.BackColor = Color.FromArgb(250, 170, 84);
+                    mb.BackgroundImage = Properties.Resources._8;
                 if (mb.Text == "16")
-                    mb.BackColor = Color.FromArgb(255, 145, 37);
+                    mb.BackgroundImage = Properties.Resources._16;
                 if (mb.Text == "32")
-                    mb.BackColor = Color.FromArgb(253, 106, 57);
+                    mb.BackgroundImage = Properties.Resources._32;
                 if (mb.Text == "64")
-                    mb.BackColor = Color.FromArgb(240, 62, 2);
+                    mb.BackgroundImage = Properties.Resources._64;
                 if (mb.Text == "128")
-                    mb.BackColor = Color.FromArgb(248, 238, 116);
+                    mb.BackgroundImage = Properties.Resources._128;
                 if (mb.Text == "256")
-                    mb.BackColor = Color.FromArgb(255, 186, 64);
+                    mb.BackgroundImage = Properties.Resources._254;
                 if (mb.Text == "512")
-                    mb.BackColor = Color.FromArgb(255, 94, 0);
+                    mb.BackgroundImage = Properties.Resources._512;
                 if (mb.Text == "1024")
-                    mb.BackColor = Color.FromArgb(220, 220, 27);
+                    mb.BackgroundImage = Properties.Resources._1024;
                 if (mb.Text == "2048")
-                    mb.BackColor = Color.FromArgb(77, 77, 77);
+                    mb.BackgroundImage = Properties.Resources._2048;
                 if (mb.Text == "4096")
-                    mb.BackColor = Color.FromArgb(208, 59, 173);
+                    mb.BackgroundImage = Properties.Resources._4096;
 
 
             }
