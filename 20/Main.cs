@@ -19,7 +19,7 @@ namespace _20
         public Main()
         {
             InitializeComponent();
-             
+
             mybtns = new MyButton[,]{
                 { btn00,btn01,btn02,btn03 },
                 { btn10,btn11,btn12,btn13 },
@@ -29,9 +29,12 @@ namespace _20
             };
             mybtnsBackup = new string[4, 4];
             paintColor();
+
+
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
+
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                     mybtnsBackup[i, j] = mybtns[i, j].Text;
@@ -51,11 +54,11 @@ namespace _20
             }
             if (key.Equals("S"))
             {
-                
+
                 AddDown();
 
                 if (done)
-                   addNumber();
+                    addNumber();
                 done = false;
             }
             if (key.Equals("W"))
@@ -90,7 +93,7 @@ namespace _20
                         mybtns[y, x].Text = mybtns[y, x + 1].Text;
                         mybtns[y, x + 1].Text = "";
                         done = true;
-                       
+
                     }
                     else
                     {
@@ -101,7 +104,7 @@ namespace _20
                             mybtns[y, x].Text = int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x + 1].Text) + "";
                             mybtns[y, x + 1].Text = "";
                             done = true;
-                            
+
 
                         }
                     }
@@ -140,7 +143,7 @@ namespace _20
 
                 }
             }
-            
+
         }
         public void AddDown()
         {
@@ -151,24 +154,24 @@ namespace _20
                 for (int x = 0; x <= 3; x++)
                 {
 
-                    if (mybtns[y, x].Text == "" && mybtns[y - 1,x].Text.Length > 0)
+                    if (mybtns[y, x].Text == "" && mybtns[y - 1, x].Text.Length > 0)
                     {
-                      
+
                         mybtns[y, x].Text = mybtns[y - 1, x].Text;
                         mybtns[y - 1, x].Text = "";
                         done = true;
-                        
+
                     }
 
-                        if (mybtns[y, x].Text.Equals(mybtns[y - 1, x].Text) && mybtns[y - 1, x].Text.Length > 0)
-                        {
-                            sum += int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text);
-                            mybtns[y, x].Text = int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text) + "";
-                            mybtns[y - 1, x].Text = "";
-                            done = true;
+                    if (mybtns[y, x].Text.Equals(mybtns[y - 1, x].Text) && mybtns[y - 1, x].Text.Length > 0)
+                    {
+                        sum += int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text);
+                        mybtns[y, x].Text = int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text) + "";
+                        mybtns[y - 1, x].Text = "";
+                        done = true;
 
-                        }
-                    
+                    }
+
 
                 }
             }
@@ -177,7 +180,7 @@ namespace _20
         {
             for (int y = 0; y <= 3; y++)
             {
-                
+
                 for (int x = 3; x > 0; x--)
                 {
                     moveToFreeSpace(true); moveToFreeSpace(true);
@@ -203,81 +206,82 @@ namespace _20
 
             }
 
-                }
+        }
         public void moveToFreeSpace(bool right = false, bool down = false, bool up = false, bool left = false)
         {
-            if(right)
-            //right
-            for (int y = 0; y <= 3; y++)
-            {
-                for (int x = 3; x > 0; x--)
-                {
-                    if (mybtns[y, x].Text == "" && mybtns[y, x - 1].Text.Length > 0)
-                    {
-                        mybtns[y, x].Text = mybtns[y, x - 1].Text;
-                        mybtns[y, x - 1].Text = "";
-                        done = true;
-                    }
-                }
-            }
-             if(down)
-            //down
-            for (int y = 3; y > 0; y--)
-            {
-
-                for (int x = 0; x <= 3; x++)
-                {
-
-                    if (mybtns[y, x].Text == "" && mybtns[y - 1, x].Text.Length > 0)
-                    {
-
-                        mybtns[y, x].Text = mybtns[y - 1, x].Text;
-                        mybtns[y - 1, x].Text = "";
-                        done = true;
-                    }
-                }
-            }
-              if(up)
-            //up
-            for (int y = 0; y < 3; y++)
-            {
-
-                for (int x = 0; x <= 3; x++)
-                {
-
-                    if (mybtns[y, x].Text == "" && mybtns[y + 1, x].Text.Length > 0)
-                    {
-
-                        mybtns[y, x].Text = mybtns[y + 1, x].Text;
-                        mybtns[y + 1, x].Text = "";
-                        done = true;
-                    }
-                }
-            }
-            if(left)
+            if (right)
+                //right
                 for (int y = 0; y <= 3; y++)
-            {
-                for (int x = 3; x > 0; x--)
                 {
-                    if (mybtns[y, x - 1].Text == "" && mybtns[y, x].Text.Length > 0)
+                    for (int x = 3; x > 0; x--)
                     {
-
-                        mybtns[y, x - 1].Text = mybtns[y, x].Text;
-                        mybtns[y, x].Text = "";
-                        done = true;
+                        if (mybtns[y, x].Text == "" && mybtns[y, x - 1].Text.Length > 0)
+                        {
+                            mybtns[y, x].Text = mybtns[y, x - 1].Text;
+                            mybtns[y, x - 1].Text = "";
+                            done = true;
+                        }
                     }
                 }
-            }
+            if (down)
+                //down
+                for (int y = 3; y > 0; y--)
+                {
+
+                    for (int x = 0; x <= 3; x++)
+                    {
+
+                        if (mybtns[y, x].Text == "" && mybtns[y - 1, x].Text.Length > 0)
+                        {
+
+                            mybtns[y, x].Text = mybtns[y - 1, x].Text;
+                            mybtns[y - 1, x].Text = "";
+                            done = true;
+                        }
+                    }
                 }
+            if (up)
+                //up
+                for (int y = 0; y < 3; y++)
+                {
+
+                    for (int x = 0; x <= 3; x++)
+                    {
+
+                        if (mybtns[y, x].Text == "" && mybtns[y + 1, x].Text.Length > 0)
+                        {
+
+                            mybtns[y, x].Text = mybtns[y + 1, x].Text;
+                            mybtns[y + 1, x].Text = "";
+                            done = true;
+                        }
+                    }
+                }
+            if (left)
+                for (int y = 0; y <= 3; y++)
+                {
+                    for (int x = 3; x > 0; x--)
+                    {
+                        if (mybtns[y, x - 1].Text == "" && mybtns[y, x].Text.Length > 0)
+                        {
+
+                            mybtns[y, x - 1].Text = mybtns[y, x].Text;
+                            mybtns[y, x].Text = "";
+                            done = true;
+                        }
+                    }
+                }
+        }
         public void addNumber()
         {
             List<MyButton> emptybuttons = new List<MyButton>();
 
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for(int j = 0; j<4; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    if (mybtns[i, j].Text.Equals("")){
+                    if (mybtns[i, j].Text.Equals(""))
+                    {
                         emptybuttons.Add(mybtns[i, j]);
                     }
                 }
@@ -287,7 +291,8 @@ namespace _20
             if (emptybuttons.Count == 0)
             {
                 MessageBox.Show("GAME OVER", " GAME OVER", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
-            }else
+            }
+            else
             {
                 emptybuttons[k].Text = "2";
             }
@@ -296,7 +301,7 @@ namespace _20
         }
         public void paintColor()
         {
-            foreach(MyButton mb in Controls.OfType<MyButton>())
+            foreach (MyButton mb in Controls.OfType<MyButton>())
             {
                 mb.BackColor = Color.FromArgb(175, 175, 175);
                 mb.BackgroundImage = null;
@@ -344,10 +349,10 @@ namespace _20
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
-                    mybtns[i, j].Text = mybtnsBackup[i,j];
+                    mybtns[i, j].Text = mybtnsBackup[i, j];
             }
             paintColor();
 
@@ -358,7 +363,27 @@ namespace _20
             Records r = new Records(points);
             r.Show();
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Down:
+                    SendKeys.Send("s");
+                    break;
+                case Keys.Right:
+                    SendKeys.Send("d");
+                    break;
+                case Keys.Up:
+                    SendKeys.Send("w");
+                    break;
+                case Keys.Left:
+                    SendKeys.Send("a");
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+
     }
-
-
 }

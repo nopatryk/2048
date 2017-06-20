@@ -406,7 +406,9 @@ namespace _20
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "2047";
+
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
+
             this.ResumeLayout(false);
 
         }
