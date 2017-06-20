@@ -19,7 +19,7 @@ namespace _20
         public Main()
         {
             InitializeComponent();
-
+             
             mybtns = new MyButton[,]{
                 { btn00,btn01,btn02,btn03 },
                 { btn10,btn11,btn12,btn13 },
