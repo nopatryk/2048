@@ -297,7 +297,7 @@ namespace _20
         {
             foreach(MyButton mb in Controls.OfType<MyButton>())
             {
-                mb.BackColor = SystemColors.Control;
+                mb.BackColor = Color.FromArgb(193, 193, 193);
 
                 if (mb.Text == "2")
                     mb.BackColor = Color.FromArgb(235, 235, 226);
