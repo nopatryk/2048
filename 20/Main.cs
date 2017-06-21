@@ -8,14 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Data.SqlClient;
+
 namespace _20
 {
     public partial class Main : Form
     {
-        int sum = 0;
-        bool done = false;
-        MyButton[,] mybtns;
-        string[,] mybtnsBackup;
+        private int sum = 0,record = 0;
+        private bool done = false;
+        private MyButton[,] mybtns;
+        private string[,] mybtnsBackup;
+        private SqlConnection sqlConnection1;
+        private string sconn;
         public Main()
         {
             InitializeComponent();
@@ -30,6 +34,24 @@ namespace _20
             mybtnsBackup = new string[4, 4];
             paintColor();
 
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            sconn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + "\\records.mdf;Integrated Security=True";
+            sqlConnection1 = new SqlConnection(sconn);
+
+            using (SqlConnection s = sqlConnection1)
+            {
+                using (SqlCommand command = new SqlCommand(@"select top 1 points from record", s))
+                {
+                    s.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        reader.Read();
+                        record = int.Parse(reader[0].ToString());
+                    }
+                }
+            }
 
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -80,6 +102,16 @@ namespace _20
             }
             paintColor();
             label2.Text = sum + "";
+            int left = record - sum;
+            if(left > 0)
+            {
+                label3.Text = left + "";
+            }
+            else if(left <= 0)
+            {
+                label3.Text = "New Record!";
+            }
+
 
         }
         public void AddLeft()
@@ -360,7 +392,7 @@ namespace _20
         private void button3_Click(object sender, EventArgs e)
         {
             int points = int.Parse(label2.Text);
-            Records r = new Records(points);
+            Records r = new Records(points,sconn);
             r.Show();
         }
 
