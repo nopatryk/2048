@@ -41,7 +41,8 @@ namespace _20
 
             using (SqlConnection s = sqlConnection1)
             {
-                using (SqlCommand command = new SqlCommand(@"select top 1 points from record", s))
+                using (SqlCommand command = new SqlCommand(@"select top 1 points FROM record ORDER BY points DESC", s))
+
                 {
                     s.Open();
 
