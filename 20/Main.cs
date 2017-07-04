@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
-using System.Data.SqlClient;
+using Settings = _20.Properties.Settings;
+
 
 namespace _20
 {
+
     public partial class Main : Form
     {
-        private int sum = 0,record = 0;
-        private bool done = false;
-        private MyButton[,] mybtns;
-        private string[,] mybtnsBackup;
-        private SqlConnection sqlConnection1;
-        private string sconn;
+
+        private int sumOfPoints = 0, currentRecord = 0; // sum of curernt points && current top1 record
+        private bool moveDone = false; // check if move of tiles is done
+        private MyButton[,] mybtns; // array of 'tiles' with points
+        private string[,] mybtnsBackup; // array to save last move
+     
         public Main()
         {
             InitializeComponent();
+            Settings.Default.nick = "";
 
             mybtns = new MyButton[,]{
                 { btn00,btn01,btn02,btn03 },
@@ -34,25 +32,8 @@ namespace _20
             mybtnsBackup = new string[4, 4];
             paintColor();
 
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            sconn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + "\\records.mdf;Integrated Security=True";
-            sqlConnection1 = new SqlConnection(sconn);
-
-            using (SqlConnection s = sqlConnection1)
-            {
-                using (SqlCommand command = new SqlCommand(@"select top 1 points FROM record ORDER BY points DESC", s))
-
-                {
-                    s.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        reader.Read();
-                        record = int.Parse(reader[0].ToString());
-                    }
-                }
-            }
+            top1record.Text = Settings.Default.top1recordS;
+            currentRecord = int.Parse(Settings.Default.top1recordS.Substring(Settings.Default.top1recordS.LastIndexOf(' ')));
 
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -71,39 +52,39 @@ namespace _20
                 AddLeft();
                 moveToFreeSpace(false, false, false, true); moveToFreeSpace(false, false, false, true);
 
-                if (done)
+                if (moveDone)
                     addNumber();
-                done = false;
+                moveDone = false;
             }
             if (key.Equals("S"))
             {
 
                 AddDown();
 
-                if (done)
+                if (moveDone)
                     addNumber();
-                done = false;
+                moveDone = false;
             }
             if (key.Equals("W"))
             {
                 AddUp();
 
-                if (done)
+                if (moveDone)
                     addNumber();
-                done = false;
+                moveDone = false;
 
             }
             if (key.Equals("D"))
             {
                 AddRight();
 
-                if (done)
+                if (moveDone)
                     addNumber();
-                done = false;
+                moveDone = false;
             }
             paintColor();
-            label2.Text = sum + "";
-            int left = record - sum;
+            label2.Text = sumOfPoints + "";
+            int left = currentRecord - sumOfPoints;
             if(left > 0)
             {
                 label3.Text = left + "";
@@ -111,7 +92,20 @@ namespace _20
             else if(left <= 0)
             {
                 label3.Text = "New Record!";
+                if (Settings.Default.nick.Equals(""))
+                {
+                    InputBox ib = new InputBox(sumOfPoints);
+                    ib.Show();
+                }
+                else
+                {
+                    Settings.Default.top1recordS = Settings.Default.nick + " " + sumOfPoints;
+                    Settings.Default.Save();
+                    Settings.Default.Upgrade();
+                }
+
             }
+
 
 
         }
@@ -125,7 +119,7 @@ namespace _20
                     {
                         mybtns[y, x].Text = mybtns[y, x + 1].Text;
                         mybtns[y, x + 1].Text = "";
-                        done = true;
+                        moveDone = true;
 
                     }
                     else
@@ -133,11 +127,10 @@ namespace _20
 
                         if (mybtns[y, x].Text.Equals(mybtns[y, x + 1].Text) && mybtns[y, x + 1].Text.Length > 0)
                         {
-                            sum += int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x + 1].Text);
+                            sumOfPoints += int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x + 1].Text);
                             mybtns[y, x].Text = int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x + 1].Text) + "";
                             mybtns[y, x + 1].Text = "";
-                            done = true;
-
+                            moveDone = true;
 
                         }
                     }
@@ -160,16 +153,16 @@ namespace _20
 
                         mybtns[y, x].Text = mybtns[y + 1, x].Text;
                         mybtns[y + 1, x].Text = "";
-                        done = true;
+                        moveDone = true;
                     }
                     else
                     {
                         if (mybtns[y, x].Text.Equals(mybtns[y + 1, x].Text) && mybtns[y + 1, x].Text.Length > 0)
                         {
-                            sum += int.Parse(mybtns[y + 1, x].Text) + int.Parse(mybtns[y, x].Text);
+                            sumOfPoints += int.Parse(mybtns[y + 1, x].Text) + int.Parse(mybtns[y, x].Text);
                             mybtns[y, x].Text = int.Parse(mybtns[y + 1, x].Text) + int.Parse(mybtns[y, x].Text) + "";
                             mybtns[y + 1, x].Text = "";
-                            done = true;
+                            moveDone = true;
 
                         }
                     }
@@ -192,16 +185,16 @@ namespace _20
 
                         mybtns[y, x].Text = mybtns[y - 1, x].Text;
                         mybtns[y - 1, x].Text = "";
-                        done = true;
+                        moveDone = true;
 
                     }
 
                     if (mybtns[y, x].Text.Equals(mybtns[y - 1, x].Text) && mybtns[y - 1, x].Text.Length > 0)
                     {
-                        sum += int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text);
+                        sumOfPoints += int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text);
                         mybtns[y, x].Text = int.Parse(mybtns[y - 1, x].Text) + int.Parse(mybtns[y, x].Text) + "";
                         mybtns[y - 1, x].Text = "";
-                        done = true;
+                        moveDone = true;
 
                     }
 
@@ -221,16 +214,16 @@ namespace _20
                     {
                         mybtns[y, x].Text = mybtns[y, x - 1].Text;
                         mybtns[y, x - 1].Text = "";
-                        done = true;
+                        moveDone = true;
                     }
                     else
                     {
                         if (mybtns[y, x].Text.Equals(mybtns[y, x - 1].Text) && mybtns[y, x - 1].Text.Length > 0)
                         {
-                            sum += (int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x - 1].Text));
+                            sumOfPoints += (int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x - 1].Text));
                             mybtns[y, x].Text = int.Parse(mybtns[y, x].Text) + int.Parse(mybtns[y, x - 1].Text) + "";
                             mybtns[y, x - 1].Text = "";
-                            done = true;
+                            moveDone = true;
 
                         }
                     }
@@ -252,7 +245,7 @@ namespace _20
                         {
                             mybtns[y, x].Text = mybtns[y, x - 1].Text;
                             mybtns[y, x - 1].Text = "";
-                            done = true;
+                            moveDone = true;
                         }
                     }
                 }
@@ -269,7 +262,7 @@ namespace _20
 
                             mybtns[y, x].Text = mybtns[y - 1, x].Text;
                             mybtns[y - 1, x].Text = "";
-                            done = true;
+                            moveDone = true;
                         }
                     }
                 }
@@ -286,7 +279,7 @@ namespace _20
 
                             mybtns[y, x].Text = mybtns[y + 1, x].Text;
                             mybtns[y + 1, x].Text = "";
-                            done = true;
+                            moveDone = true;
                         }
                     }
                 }
@@ -300,7 +293,7 @@ namespace _20
 
                             mybtns[y, x - 1].Text = mybtns[y, x].Text;
                             mybtns[y, x].Text = "";
-                            done = true;
+                            moveDone = true;
                         }
                     }
                 }
@@ -319,15 +312,16 @@ namespace _20
                     }
                 }
             }
-            Random r = new Random();
-            int k = r.Next(emptybuttons.Count);
-            if (emptybuttons.Count == 0)
+
+            if (emptybuttons.Count != 0)
             {
-                MessageBox.Show("GAME OVER", " GAME OVER", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+                Random r = new Random();
+                int k = r.Next(emptybuttons.Count);
+                emptybuttons[k].Text = "2";
             }
             else
             {
-                emptybuttons[k].Text = "2";
+                MessageBox.Show("GAME OVER", " GAME OVER", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
             }
 
 
@@ -376,7 +370,7 @@ namespace _20
                 mbtns.Text = "";
             }
             btn21.Text = "2";
-            sum = 0;
+            sumOfPoints = 0;
             label2.Text = "0";
             paintColor();
         }
@@ -389,12 +383,6 @@ namespace _20
             }
             paintColor();
 
-        }
-        private void button3_Click(object sender, EventArgs e)
-        {
-            int points = int.Parse(label2.Text);
-            Records r = new Records(points,sconn);
-            r.Show();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -416,7 +404,5 @@ namespace _20
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
-
     }
 }

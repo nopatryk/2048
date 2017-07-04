@@ -37,7 +37,6 @@ namespace _20
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.btn33 = new _20.MyButton();
@@ -57,6 +56,9 @@ namespace _20
             this.btn01 = new _20.MyButton();
             this.btn00 = new _20.MyButton();
             this.label4 = new System.Windows.Forms.Label();
+            this.top1 = new System.Windows.Forms.PictureBox();
+            this.top1record = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.top1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -112,22 +114,6 @@ namespace _20
             this.button2.Text = "COFNIJ";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(164)))), ((int)(((byte)(87)))));
-            this.button3.CausesValidation = false;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Franklin Gothic Heavy", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button3.ForeColor = System.Drawing.SystemColors.Control;
-            this.button3.Location = new System.Drawing.Point(281, 254);
-            this.button3.Name = "button3";
-            this.button3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button3.Size = new System.Drawing.Size(117, 57);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "REKORDY";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // panel1
             // 
@@ -397,15 +383,33 @@ namespace _20
             this.label4.TabIndex = 23;
             this.label4.Text = "Left to record:";
             // 
+            // top1
+            // 
+            this.top1.Image = global::_20.Properties.Resources.top1;
+            this.top1.Location = new System.Drawing.Point(316, 234);
+            this.top1.Name = "top1";
+            this.top1.Size = new System.Drawing.Size(52, 54);
+            this.top1.TabIndex = 24;
+            this.top1.TabStop = false;
+            // 
+            // top1record
+            // 
+            this.top1record.Location = new System.Drawing.Point(275, 300);
+            this.top1record.Name = "top1record";
+            this.top1record.Size = new System.Drawing.Size(123, 22);
+            this.top1record.TabIndex = 25;
+            this.top1record.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(225)))));
             this.ClientSize = new System.Drawing.Size(410, 331);
+            this.Controls.Add(this.top1record);
+            this.Controls.Add(this.top1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
@@ -433,6 +437,7 @@ namespace _20
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "2047";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
+            ((System.ComponentModel.ISupportInitialize)(this.top1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,10 +464,11 @@ namespace _20
         private Label label2;
         private Button button1;
         private Button button2;
-        private Button button3;
         private Panel panel1;
         private Label label3;
         private Label label4;
+        private PictureBox top1;
+        private Label top1record;
     }
 
 }

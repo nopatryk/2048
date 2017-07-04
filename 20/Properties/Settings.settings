@@ -10,5 +10,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\records.mdf;Integrated Security=True</Value>
     </Setting>
+    <Setting Name="top1recordS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Paulina 111760</Value>
+    </Setting>
+    <Setting Name="nick" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
